@@ -1,9 +1,13 @@
 #include "USBDeviceInfo.h"
+
+#ifdef _WIN32
+// Inkludera nödvändiga Windows-bibliotek
+#include <windows.h>
 #include <setupapi.h>
 #include <initguid.h>
 #include <regstr.h>
 #include <Cfgmgr32.h>
-#include <windows.h>
+#include <iostream>
 #include <sstream>
 
 USBDeviceInfo::USBDeviceInfo() {}
@@ -73,12 +77,6 @@ void USBDeviceInfo::listUSBDevices() {
     SetupDiDestroyDeviceInfoList(deviceInfoSet);
 }
 
-// Hämtar USB-versionen (placeholder, för full implementering kan vi använda IOCTL)
-std::string USBDeviceInfo::getUSBVersion(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData) {
-    // Placeholder, kan använda DeviceIoControl med IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX_V2
-  //  return "Unknown USB Version";
-}
-
 std::string USBDeviceInfo::getDeviceProperty(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData, DWORD property) {
     char buffer[256];
     if (SetupDiGetDeviceRegistryPropertyA(deviceInfoSet, &deviceInfoData, property, NULL, (PBYTE)buffer, sizeof(buffer), NULL)) {
@@ -118,3 +116,71 @@ std::string USBDeviceInfo::getDeviceSpeed(HDEVINFO deviceInfoSet, SP_DEVINFO_DAT
     // Detta är en enkel platsinnehavare för vidare utveckling.
     return "Unknown Speed";
 }
+
+std::string USBDeviceInfo::getUSBVersion(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData) {
+    // Placeholder, kan använda DeviceIoControl med IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX_V2
+    return "Unknown USB Version";
+}
+
+#endif
+
+#ifdef __APPLE__
+// macOS-specifika bibliotek
+#include <IOKit/IOKitLib.h>
+#include <IOKit/usb/IOUSBLib.h>
+#include <CoreFoundation/CoreFoundation.h>
+
+USBDeviceInfo::USBDeviceInfo() {}
+
+USBDeviceInfo::~USBDeviceInfo() {}
+
+void USBDeviceInfo::listUSBDevices() {
+    #ifdef __APPLE__
+    listUSBDevicesMac();
+    #endif
+}
+
+void USBDeviceInfo::listUSBDevicesMac() {
+    // Hämta alla USB-enheter med IOKit
+    CFMutableDictionaryRef matchingDict = IOServiceMatching(kIOUSBDeviceClassName);
+    io_iterator_t iterator;
+
+    // Uppdatering: använd kIOMainPortDefault istället för kIOMasterPortDefault
+    kern_return_t result = IOServiceGetMatchingServices(kIOMainPortDefault, matchingDict, &iterator);
+    if (result != KERN_SUCCESS) {
+        std::cerr << "Failed to get USB devices on macOS." << std::endl;
+        return;
+    }
+
+    io_object_t usbDevice;
+    while ((usbDevice = IOIteratorNext(iterator))) {
+        printUSBDeviceInfo(usbDevice);
+        IOObjectRelease(usbDevice);
+    }
+
+    IOObjectRelease(iterator);
+}
+
+void USBDeviceInfo::printUSBDeviceInfo(io_object_t usbDevice) {
+    std::cout << "----------------------------------------" << std::endl;
+    std::cout << "Device: " << getPropertyString(usbDevice, CFSTR(kUSBProductString)) << std::endl;
+    std::cout << "Vendor: " << getPropertyString(usbDevice, CFSTR(kUSBVendorString)) << std::endl;
+    std::cout << "Serial Number: " << getPropertyString(usbDevice, CFSTR(kUSBSerialNumberString)) << std::endl;
+    std::cout << "USB Version: " << getPropertyString(usbDevice, CFSTR(kUSBDeviceReleaseNumber)) << std::endl;
+}
+
+std::string USBDeviceInfo::getPropertyString(io_object_t device, CFStringRef property) {
+    CFTypeRef propertyValue = IORegistryEntryCreateCFProperty(device, property, kCFAllocatorDefault, 0);
+    if (propertyValue) {
+        if (CFGetTypeID(propertyValue) == CFStringGetTypeID()) {
+            char buffer[256];
+            CFStringGetCString((CFStringRef)propertyValue, buffer, sizeof(buffer), kCFStringEncodingUTF8);
+            CFRelease(propertyValue);
+            return std::string(buffer);
+        }
+        CFRelease(propertyValue);
+    }
+    return "Unknown";
+}
+
+#endif
