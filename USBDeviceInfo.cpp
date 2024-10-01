@@ -64,7 +64,7 @@ void USBDeviceInfo::listUSBDevices() {
                 std::cout << "Port Name (FTDI): " << getDeviceProperty(deviceInfoSet, deviceInfoData, SPDRP_PHYSICAL_DEVICE_OBJECT_NAME) << std::endl;
 
                 // USB Version (placeholder)
-                //std::cout << "USB Version: " << getUSBVersion(deviceInfoSet, deviceInfoData) << std::endl;
+                std::cout << "USB Version: " << getUSBVersion(deviceInfoSet, deviceInfoData) << std::endl;
             }
         }
     }
@@ -74,10 +74,10 @@ void USBDeviceInfo::listUSBDevices() {
 }
 
 // Hämtar USB-versionen (placeholder, för full implementering kan vi använda IOCTL)
-//std::string USBDeviceInfo::getUSBVersion(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData) {
+std::string USBDeviceInfo::getUSBVersion(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData) {
     // Placeholder, kan använda DeviceIoControl med IOCTL_USB_GET_NODE_CONNECTION_INFORMATION_EX_V2
   //  return "Unknown USB Version";
-//}
+}
 
 std::string USBDeviceInfo::getDeviceProperty(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData, DWORD property) {
     char buffer[256];
