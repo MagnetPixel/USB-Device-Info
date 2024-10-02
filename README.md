@@ -16,7 +16,7 @@ It started with the simple idea that I wanted to read as much information about 
 # Limitations
 There is a huge difference what readable using this method. The tool discover each interface but information on chip level is not that comprehensive.
 
-#output (windows)
+# output (windows)
 
 Device: USB\ROOT_HUB30\xxxxxxxxxxxxxxxx
 Description: USB Root Hub (USB 3.0)
