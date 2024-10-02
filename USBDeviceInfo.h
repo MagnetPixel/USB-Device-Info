@@ -1,3 +1,4 @@
+//USBDeviceinfo.h¨
 #ifndef USBDEVICEINFO_H
 #define USBDEVICEINFO_H
 
@@ -28,6 +29,7 @@ public:
 private:
     #ifdef _WIN32
     // Helpfunctions
+    void listUSBDevicesWindows();
     std::string getDeviceProperty(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData, DWORD property);
     std::string getDriverInfo(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData);
     std::string getDriverVersion(HDEVINFO deviceInfoSet, SP_DEVINFO_DATA& deviceInfoData);

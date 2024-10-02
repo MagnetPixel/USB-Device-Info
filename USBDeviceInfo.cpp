@@ -1,4 +1,4 @@
-#include "USBDeviceInfo.h"
+#include "USBDeviceInfo.cpp"
 
 #ifdef _WIN32
 // Inkludera nödvändiga Windows-bibliotek
