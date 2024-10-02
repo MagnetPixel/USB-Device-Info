@@ -18,17 +18,17 @@ There is a huge difference what readable using this method. The tool discover ea
 
 # output (windows)
 
-Device: USB\ROOT_HUB30\xxxxxxxxxxxxxxxx
-Description: USB Root Hub (USB 3.0)
-Model: Unknown
-IDs: USB\ROOT_HUB30\xxxxxxxxxxx
-Make: (USB-standardhub)
-Driver: {xxxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002
-Driver Version: {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002
-Driver Location: {xxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002
-Speed: Unknown Speed
-WCID:
-Serial Number: USB\ROOT_HUB30&VIDxxxxxxxxxxxxxxxxxxxxxxxxx
-Port Name (FTDI): \Device\USBPDO-1
-USB Version: Unknown USB Version
+Device: USB\ROOT_HUB30\xxxxxxxxxxxxxxxx  
+Description: USB Root Hub (USB 3.0)   
+Model: Unknown  
+IDs: USB\ROOT_HUB30\xxxxxxxxxxx  
+Make: (USB-standardhub)  
+Driver: {xxxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002  
+Driver Version: {xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002  
+Driver Location: {xxxxxxxxxxxxxxxxxxxxxxxxxxx}\0002  
+Speed: Unknown Speed  
+WCID:  
+Serial Number: USB\ROOT_HUB30&VIDxxxxxxxxxxxxxxxxxxxxxxxxx  
+Port Name (FTDI): \Device\USBPDO-1  
+USB Version: Unknown USB Version  
 
