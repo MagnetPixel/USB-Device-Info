@@ -1,3 +1,7 @@
+// ***************************
+// Filename: USBDeviceInfo.h
+// ***************************
+
 #ifndef USBDEVICEINFO_H
 #define USBDEVICEINFO_H
 
