@@ -1,8 +1,5 @@
 # Makefile for compiling USB Device Info project
 # Supports both Windows and macOS
-# mac: g++ -o list_usb USBDeviceInfo.cpp main.cpp -framework IOKit -framework CoreFoundation
-# win: g++ -o list_usb USBDeviceInfo.cpp main.cpp -lsetupapi -static-libgcc -static-libstdc++ -static
-
 
 # Compilator
 CXX = g++
@@ -22,11 +19,23 @@ UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)
     # macOS-specifik kompilering
-    CXXFLAGS += -framework IOKit -framework CoreFoundation
+    CXXFLAGS += -framework IOKit -framework CoreFoundation 
+    # Korrigerad sökväg till IOKit-headerfiler
+    CXXFLAGS += -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/IOKit.framework/Headers 
 else
     # Windows-specifik kompilering (förutsatt MinGW eller liknande)
     CXXFLAGS += -static-libgcc -static-libstdc++ -static
     LIBS += -lsetupapi
+endif
+
+# Debug-flagga
+ifeq ($(DEBUG), 1)
+    CXXFLAGS += -g -Wall -Wextra -Werror
+endif
+
+# Verbose-flagga
+ifeq ($(VERBOSE), 1)
+    CXXFLAGS += -v
 endif
 
 # Standardregel för att bygga projektet
