@@ -1,3 +1,7 @@
+// ***************************
+// Filename: USBDeviceInfo.cpp
+// ***************************
+
 #include "USBDeviceInfo.h"
 
 #ifdef _WIN32
