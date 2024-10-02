@@ -1,7 +1,7 @@
 # USB_device_info
 A little tool to read USB info and print it to console
 
-Tested on Windows 10 64bit
+Tested on Windows 10 64bit, OSX 13.6.7
 
 The tool just prints all the USB devices in the Console
 
@@ -12,8 +12,8 @@ Please share any improvements :)
 
 # Idea behind the project
 It started with the simple idea that I wanted to read as much information about the USB capabuilities in the machine.
-This can be used in other projects. 
 
-I dont know that much about the interface hence getting all the hardware spec. was a natural first step.
+# Limitations
+It does not give much info on Mac interfaces but it lists info on HUBs connected to the MAC...
 
 
